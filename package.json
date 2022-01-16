@@ -23,6 +23,6 @@
     "@openzeppelin/contracts": "^3.4.1",
     "@supercharge/strings": "^1.24.0",
     "@truffle/hdwallet-provider": "^2.0.0",
-    "truffle": "^5.4.29"
+    "truffle": "^5.1.65"
   }
 }
