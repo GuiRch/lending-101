@@ -24,15 +24,15 @@ contract ExerciceSolution {
         aave.deposit(address(DAI), myDAIBalance, address(this), 0);
     }
 
-    function withdrawSomeTokens() public {
-        
-    }
-
 	function borrowSomeTokens() public {
-        
+        aave.borrow(address(USDC), 1000, 2, 0, address(this));
     }
 
 	function repaySomeTokens() public {
+        
+    }
+
+    function withdrawSomeTokens() public {
         
     }
 

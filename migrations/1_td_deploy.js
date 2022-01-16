@@ -45,8 +45,8 @@ async function deploySolution(deployer, network, accounts) {
     await Evaluator.ex5_showContractCanDepositTokens()
     console.log('Ex 5 Done')
 
-    // await Evaluator.ex6_showContractCanBorrowTokens()
-    // console.log('Ex 6 Done')
+    await Evaluator.ex6_showContractCanBorrowTokens()
+    console.log('Ex 6 Done')
 
     // await Evaluator.ex7_showContractCanRepayTokens()
     // console.log('Ex 7 Done')
