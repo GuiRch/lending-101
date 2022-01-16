@@ -15,6 +15,8 @@ async function hardcodeContractAddress(deployer, network, accounts) {
 	TDToken = await points.at("0xEA6eF07Eb2D93F618120fF8AD6537f562e011790")
 	Evaluator = await evaluator.at("0xF00a099b637841fB2D240ABEeDeb48719836fd6D")
 
+    AAVEContractAddress = "0xE0fBa4Fc209b4948668006B2bE61711b7f465bAe"
+
     DAIAddress = "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD"
 	Dai = await erc20.at(DAIAddress)
 
@@ -27,7 +29,7 @@ async function deploySolution(deployer, network, accounts) {
 	var myPoints = await TDToken.balanceOf(accounts[0])
     console.log("Points before : " + myPoints.toString())
 
-    ExerciceSolution = await exerciceSolution.new(DAIAddress, USDCAddress)
+    ExerciceSolution = await exerciceSolution.new(AAVEContractAddress, DAIAddress, USDCAddress)
     console.log('ExerciceSolution address : ' + ExerciceSolution.address)
 
     // Send Dai to the contract for the need of the exercice
@@ -37,10 +39,11 @@ async function deploySolution(deployer, network, accounts) {
     console.log('Amount Dai to send : ' + amountDAIToSend.toString())
     await Dai.transfer(ExerciceSolution.address, BigInt(amountDAIToSend))
 
-    // await Evaluator.submitExercice(ExerciceSolution.address)
+
+    await Evaluator.submitExercice(ExerciceSolution.address)
     
-    // await Evaluator.ex5_showContractCanDepositTokens()
-    // console.log('Ex 5 Done')
+    await Evaluator.ex5_showContractCanDepositTokens()
+    console.log('Ex 5 Done')
 
     // await Evaluator.ex6_showContractCanBorrowTokens()
     // console.log('Ex 6 Done')
