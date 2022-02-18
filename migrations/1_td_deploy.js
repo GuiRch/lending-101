@@ -48,11 +48,11 @@ async function deploySolution(deployer, network, accounts) {
     await Evaluator.ex6_showContractCanBorrowTokens()
     console.log('Ex 6 Done')
 
-    // await Evaluator.ex7_showContractCanRepayTokens()
-    // console.log('Ex 7 Done')
+    await Evaluator.ex7_showContractCanRepayTokens()
+    console.log('Ex 7 Done')
 
-    // await Evaluator.ex8_showContractCanWithdrawTokens()
-    // console.log('Ex 8 Done')
+    await Evaluator.ex8_showContractCanWithdrawTokens()
+    console.log('Ex 8 Done')
 
     // await Evaluator.ex9_performFlashLoan()
     // console.log('Ex 9 Done')
