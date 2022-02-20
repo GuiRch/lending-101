@@ -1,12 +1,16 @@
 var points = artifacts.require("ERC20TD.sol");
 var evaluator = artifacts.require("Evaluator.sol");
+var flashLoan = artifacts.require("FlashLoan.sol");
 var exerciceSolution = artifacts.require("ExerciceSolution.sol");
+// var flashLoanReceiverBase = artifacts.require("FlashLoanReceiverBase.sol");
 
 var erc20 = artifacts.require("IERC20.sol")
 
 module.exports = (deployer, network, accounts) => {
     deployer.then(async () => {
         await hardcodeContractAddress(deployer, network, accounts)
+        // await deployFlashLoanReceiverBase(deployer, network, accounts);
+        await deployFlashLoan(deployer, network, accounts);
         await deploySolution(deployer, network, accounts);
     });
 };
@@ -16,6 +20,7 @@ async function hardcodeContractAddress(deployer, network, accounts) {
 	Evaluator = await evaluator.at("0xF00a099b637841fB2D240ABEeDeb48719836fd6D")
 
     AAVEContractAddress = "0xE0fBa4Fc209b4948668006B2bE61711b7f465bAe"
+    AAVELendingPoolAddressesProvider = "0x88757f2f99175387ab4c6a4b3067c77a695b0349"
 
     DAIAddress = "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD"
 	Dai = await erc20.at(DAIAddress)
@@ -25,11 +30,19 @@ async function hardcodeContractAddress(deployer, network, accounts) {
     variableDebtUSDCAddress = "0xbe9b058a0f2840130372a81ebb3181dce02be957"
 }
 
+// async function deployFlashLoanReceiverBase(deployer, network, accounts) {
+// 	FlashLoanReceiverBase = await flashLoanReceiverBase.new(AAVELendingPoolAddressesProvider)
+// }
+
+async function deployFlashLoan(deployer, network, accounts) {
+	FlashLoan = await flashLoan.new(AAVELendingPoolAddressesProvider)
+}
+
 async function deploySolution(deployer, network, accounts) {
 	var myPoints = await TDToken.balanceOf(accounts[0])
     console.log("Points before : " + myPoints.toString())
 
-    ExerciceSolution = await exerciceSolution.new(AAVEContractAddress, DAIAddress, USDCAddress)
+    ExerciceSolution = await exerciceSolution.new(FlashLoan.address, AAVEContractAddress, DAIAddress, USDCAddress)
     console.log('ExerciceSolution address : ' + ExerciceSolution.address)
 
     // Send Dai to the contract for the need of the exercice
@@ -56,6 +69,7 @@ async function deploySolution(deployer, network, accounts) {
 
     // await Evaluator.ex9_performFlashLoan()
     // console.log('Ex 9 Done')
+    
 
     var myPoints = await TDToken.balanceOf(accounts[0])
 	console.log("Points after : " + myPoints.toString())
